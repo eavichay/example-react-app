@@ -1,0 +1,94 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.hStack {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.stickyTable {
+  max-height: 31.5rem;
+  width: 100%;
+  overflow-y: auto;
+  display: inline-block;
+  box-shadow: 0 0 6px 0px rgba(0, 0, 0, 0.15), 0 2px 4px 0px rgba(0, 0, 0, 0.15);
+}
+
+.stickyTable thead {
+  position: sticky;
+  display: table;
+  top: 0;
+  width: 100%;
+}
+
+.stickyTable tbody {
+  display: table;
+  width: 100%;
+}
+
+.nameWithTag {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+}
+.nameWithTag::after {
+  margin-inline-start: 0.5rem;
+  content: attr(data-class);
+  color: white;
+  font-size: 60%;
+  padding: 0.015rem 0.5rem;
+  background-color: darkgray;
+  border-radius: 100rem;
+  min-width: 2rem;
+  width: auto;
+  text-align: center;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.stickyTable td,
+.stickyTable th {
+  text-align: left;
+}
+
+.stickyTable *[data-label="year"] {
+  width: 5rem;
+}
+.stickyTable *[data-label="name"] {
+  width: 12rem;
+}
+
+.stickyTable *[data-label="geo"] {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stickyTable *[data-label="mass"] {
+  width: 10rem;
+  text-align: right;
+}
+
+.stickyTable tr:nth-child(even):not(:hover) {
+  background: #fafafa;
+}
+
+.tableContainer {
+  position: relative;
+}
+
+.tableSearch {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+}
+
+.errorMessage {
+  padding: 1rem;
+  display: block;
+  background: lightcoral;
+}

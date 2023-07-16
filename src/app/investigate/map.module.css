@@ -1,0 +1,20 @@
+.buttonBar {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.closeButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    min-width: 2rem;
+    min-height: 2rem;
+    background: white;
+}
+
+.zoomControl {
+    background: white;
+    min-width: 2rem;
+    min-height: 2rem;
+}
