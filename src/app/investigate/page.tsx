@@ -17,7 +17,7 @@ import OwnStyles from "./investigate.module.css";
 const Investigate = () => {
   const model = useAsteroidLookup();
   const [incidents, setIncidents] = useState<IAsteroidLookupInfo[]>([]);
-  const [isMassEnabled, setMassEnabled] = useState(false);
+  const [isDateRangeEnabled, setDateRangeEnabled] = useState(false);
 
   const [selectedIncident, setSelectedIncident] =
     useState<IAsteroidLookupInfo>();
@@ -64,8 +64,8 @@ const Investigate = () => {
   const submitSearch = () => {
     const incidents = getByYearRange(
       startYear,
-      endYear,
-      isMassEnabled ? mass : 0
+      isDateRangeEnabled ? endYear : startYear,
+      mass
     );
     setIncidents(incidents);
     setTableFilter("");
@@ -84,7 +84,13 @@ const Investigate = () => {
             data={knownYears?.values || []}
           />
           <label>&rarr;</label>
+          <input
+            type="checkbox"
+            checked={isDateRangeEnabled}
+            onChange={(e) => setDateRangeEnabled(e.target.checked)}
+          />
           <Combo
+            disabled={!isDateRangeEnabled}
             initialValue={endYear.toString()}
             onSelect={setEndYear}
             dataTransformer={incidentsDataProvider}
@@ -94,20 +100,7 @@ const Investigate = () => {
         <div className={OwnStyles.hStack}>
           <label>Minimal Mass</label>
           <input
-            type="checkbox"
-            checked={isMassEnabled}
-            onChange={(e) => setMassEnabled(e.target.checked)}
-          />
-          <input
-            disabled={!isMassEnabled}
-            type="range"
-            min={0}
-            max={HEAVIEST_POSSIBLE_MASS}
-            value={mass}
-            onChange={(e) => setMass(parseFloat(e.target.value))}
-          />
-          <input
-            disabled={!isMassEnabled}
+            // disabled={!isMassEnabled}
             type="number"
             min={0}
             max={HEAVIEST_POSSIBLE_MASS}
@@ -116,7 +109,9 @@ const Investigate = () => {
           />
         </div>
         <button onClick={submitSearch}>Search</button>
-        {model.errorMessage && <span className={OwnStyles.errorMessage}>{model.errorMessage}</span>}
+        {model.errorMessage && (
+          <span className={OwnStyles.errorMessage}>{model.errorMessage}</span>
+        )}
         <MapModal
           incident={selectedIncident}
           onClose={() => setSelectedIncident(undefined)}
@@ -135,6 +130,7 @@ const Investigate = () => {
                     <th data-label="mass">Mass</th>
                     <th data-label="fell">Fall</th>
                     <th data-label="geo">Location</th>
+                    <th data-label="map">Map</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -157,25 +153,32 @@ const Investigate = () => {
                         ) : (
                           <>
                             {entry.reclat}, {entry.reclong}
-                            <LocationIcon
-                              width="24"
-                              height="16"
-                              onClick={() => setSelectedIncident(entry)}
-                            />
                           </>
                         )}
+                      </td>
+                      <td data-label="map">
+                      {!entry.reclat || !entry.reclong ? null :
+                        <LocationIcon
+                          width="24"
+                          height="16"
+                          onClick={() => setSelectedIncident(entry)}
+                        />}
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <input
-                value={tableFilter}
-                onChange={(e) => setTableFilter(e.target.value)}
-                className={OwnStyles.tableSearch}
-                type="search"
-                placeholder="Find..."
-              ></input>
+              {incidents.length > 10 ? (
+                <input
+                  value={tableFilter}
+                  onChange={(e) => setTableFilter(e.target.value)}
+                  className={OwnStyles.tableSearch}
+                  type="search"
+                  placeholder="Focus on..."
+                ></input>
+              ) : (
+                ""
+              )}
             </div>
           </>
         ) : (

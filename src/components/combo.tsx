@@ -5,6 +5,7 @@ type OwnOpts = {
     throttle?: number
     data: any[]
     initialValue?: string;
+    disabled?: boolean;
     dataProvider?: (query: string) => any[] | Promise<any[]>
     dataTransformer?: (query: string) => { label: string, value: any }
     onSelect?: (value: any) => any
@@ -52,7 +53,7 @@ export const Combo = (opts: OwnOpts) => {
 
     return <>
         <form style={{display: 'inline'}} onChange={handleSelect} onSubmit={handleSelect} onBlur={handleSelect}>
-        <input type="text" list={dataListId} value={query}
+        <input disabled={opts.disabled} type="text" list={dataListId} value={query}
             onInput={e => setQuery((e.target as HTMLInputElement).value)}/>
         <datalist id={dataListId}>
             {result.map(item => <DataListOption key={item} value={transformer(item)} />)}

@@ -63,9 +63,9 @@
   width: 12rem;
 }
 
-.stickyTable *[data-label="geo"] {
-  display: flex;
+.stickyTable *[data-label="map"] {
   justify-content: space-between;
+  width: 4rem;
 }
 
 .stickyTable *[data-label="mass"] {

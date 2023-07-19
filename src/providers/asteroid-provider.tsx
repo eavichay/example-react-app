@@ -3,7 +3,7 @@
 import { useAsteroidLookup } from "@/app/model/useAsteroidLookup";
 import { PropsWithChildren } from "react";
 
-export const WithDataProvider = (props: PropsWithChildren<{}>) => {
+export const EnsureAsteroidDataLoaded = (props: PropsWithChildren<{}>) => {
     const {loadInitialData, isLoaded, isLoading, isError} = useAsteroidLookup() || {};
   
     if (!isLoaded && !isLoading && !isError) {

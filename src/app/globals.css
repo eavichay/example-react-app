@@ -113,7 +113,7 @@ h1 {
 }
 
 button {
-  background: transparent;
+  background: canvas;
   border: 1px solid var(--accent-color);
   padding: 0.25rem 1rem;
   text-align: center;
@@ -123,6 +123,7 @@ input {
   border: 1px solid var(--accent-color);
   padding: 0.25rem 1rem;
 }
+
 
 input:focus {
   outline: none;
